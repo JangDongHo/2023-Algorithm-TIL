@@ -1,0 +1,1 @@
+countNum[num] += 1;
