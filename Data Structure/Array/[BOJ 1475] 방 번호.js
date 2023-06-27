@@ -9,7 +9,9 @@ inputArr.forEach((digit) => {
   digitCount[digit] = digitCount[digit] + 1 || 1;
 });
 
-digitCount["6"] = Math.ceil((digitCount["6"] + digitCount["9"]) / 2) || 0;
+digitCount["6"] = digitCount["6"] || 0;
+digitCount["9"] = digitCount["9"] || 0;
+digitCount["6"] = Math.ceil(Number(digitCount["6"] + digitCount["9"]) / 2);
 digitCount["9"] = 0;
 
 sortedDigitArr = Object.values(digitCount).sort((a, b) => b - a);
