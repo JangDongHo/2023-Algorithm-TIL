@@ -1,26 +1,22 @@
-function addQueue(array) {
-  array.reverse();
-  const front = array.pop();
-  array.reverse();
-  array.push(front);
-  return array;
-}
-
 function solution(priorities, location) {
-  const n = priorities.length;
-  let checkQueue = new Array(n).fill(false);
-  checkQueue[location] = true;
-  console.log(checkQueue);
-  let answer = 1;
-  for (let i = 0; i < n; i++) {
-    if (priorities.some((x) => priorities[i] < x)) {
-      priorities = addQueue(priorities);
-      checkQueue = addQueue(checkQueue);
+  // 프로세스 중요도를 index 값과 함께 배열에 저장
+  let queue = priorities.map((priority, index) => ({ priority, index }));
+  let count = 0;
+
+  while (queue.length > 0) {
+    const currentProcess = queue.shift();
+    const highestPriority = Math.max(
+      ...queue.map((process) => process.priority)
+    );
+    console.log(...queue.map((process) => process.priority));
+
+    if (currentProcess.priority < highestPriority) queue.push(currentProcess);
+    else {
+      count++;
+      if (currentProcess.index === location) return count;
     }
   }
-  console.log(checkQueue);
 }
 
-priorities = [1, 1, 9, 1, 1, 1];
-location = 0;
-console.log(solution(priorities, location));
+console.log(solution([2, 1, 3, 2], 2));
+console.log(solution([1, 1, 9, 1, 1, 1], 0));
